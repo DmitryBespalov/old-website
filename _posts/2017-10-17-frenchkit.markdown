@@ -220,11 +220,11 @@ More on that topic you can learn from the presentation itself here.
 -->
 
 ## Don’t Worry, Be Lazy
-In this talk, Olivier Halligon ([@aligatr](https://twitter.com/aligatr)) told about Swiftgen and Swiftlint - tools to improve code quality. 
+In this talk, Olivier Halligon ([@aligatr](https://twitter.com/aligatr)) told about SwiftGen and Sourcery - tools to improve code quality. 
 
 ![Olivier Halligon](https://s3.eu-central-1.amazonaws.com/images.dnbespalov.com/frenchkit/IMG_9553.JPG "Olivier Halligon"){:height="480px" width="480px"}
 
-It was interesting to learn about those two, and additionally about Gyro - a custom tool from Realm to transform xcdatamodel to a Realm classes for iOS and Android.
+It was interesting to learn about those two, and additionally about Gyro - a custom tool to transform xcdatamodel to a Realm classes for iOS and Android.
 
 <!--
 Learn more about it here.
