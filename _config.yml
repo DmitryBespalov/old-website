@@ -23,13 +23,24 @@ url: "https://dnbespalov.com" # the base hostname & protocol for your site, e.g.
 twitter_username: dnbespalov
 github_username:  DmitryBespalov
 google_analytics: UA-131314794-1
+twitter:
+  username: dnbespalov
+  card: summary
+logo: /assets/bespalov_logo.png
+social:
+  name: Dmitry Bespalov
+  links:
+    - https://twitter.com/dnbespalov
+    - https://www.linkedin.com/in/dmitry-b-4354b828/
+    - https://github.com/DmitryBespalov
 
 # Build settings
 markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-
+  - jekyll-seo-tag
+  - jekyll-sitemap
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
