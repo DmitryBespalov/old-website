@@ -5,7 +5,7 @@ title:  "Xcode Target Dependencies"
 
 # Definition
 
-![Target Dependencies](/assets/target_dependencies_focused.png)
+![Target Dependencies][1]
 
 Xcode Target Dependencies is a list of dependencies required to build a selected target.
 
@@ -25,7 +25,7 @@ This is called *implicit dependency*.
 
 To introduce implicit dependency, add a new item to the "Link Binary With Libraries" list in the target's build phases.
 
-![Link Binary With Libraries Build Phase](/assets/link_with_libraries.png)
+![Link Binary With Libraries Build Phase][2]
 
 *Figure 1*. **Link Binaries With Libraries Build Phase**. 1 - Select project, 2 - Select target, 3 - Select Build Phases, 4 - Add or remove items, 5 - Set item as Required or Optional. Required items are *implicit dependencies*.
 
@@ -39,12 +39,14 @@ Xcode builds all explicit dependencies before the dependent target.
 
 To introduce explicit dependency, add a new item to the "Target Dependencies" list in the target's build phases.
 
-![Target Dependencies Build Phase](/assets/target_dependencies.png)
+![Target Dependencies Build Phase][3]
 
 *Figure 2*. **Target Dependencies Build Phase**. 1 - Add or remove items. Each item is *explicit dependency* which will override any implicit dependency with the same name.
 
 
 ## Xcode Target Products
+
+Let's take a look at the several types of products which, among others, Xcode can produce: iOS app, iOS framework, Bundle, and libraries.
 
 ### The anatomy of an iOS app
 
@@ -105,17 +107,20 @@ One target produces one product.
 
 A product is a program, library, framework, app, or other type of output supported by Xcode (see above).
 
+## Xcode Build Phases and Settings
+
 Creating a product requires work of multiple tools of the build system. 
 
-For iOS app, the standard steps are the following:
+For an iOS app, the standard steps are the following:
 * Build all explicit and implicit dependencies
 * Create product bundle structure
-* Compile source code files
-* Link the compiled sources, libraries and frameworks into executable
-* Compile resource files
-* Copy the compiled files to the product bundle
-* Sign the source code with developer certificate
-* Copy signature to the product bundle
+* Create executable
+    * Compile source code files
+    * Link the compiled sources, libraries and frameworks into executable
+* Copy resources
+    * Compile resource files
+    * Copy the compiled files to the product bundle
+* Sign the source code with developer certificate and copy signature to the product bundle.
 
 Xcode build system is configurable with build settings. They include information:
 * Which SDK to use
@@ -125,15 +130,15 @@ Xcode build system is configurable with build settings. They include information
 * Which certificates and provisioning profiles to use for code signing
 
 Xcode build process is configurable with build phases. For iOS app, they include:
-* Target Dependencies Phase - explicitly specifies the list of other targets to build before the selected target
-* Compile Sources Phase - specifies the list of source code files to compile
-* Link Binaries With Libraries Phase - specifies the list of libraries and frameworks that link to the selected target's binary. Xcode uses this list to discover implicit target dependencies.
-* Copy Bundle Resources Phase - the list of files to copy to the product's package.
+* *Target Dependencies Phase* - explicitly specifies the list of other targets to build before the selected target
+* *Compile Sources Phase* - specifies the list of source code files to compile
+* *Link Binaries With Libraries Phase* - specifies the list of libraries and frameworks that link to the selected target's binary. Xcode uses this list to discover implicit target dependencies.
+* *Copy Bundle Resources Phase* - the list of files to copy to the product's package.
 
 Additionally, you can add custom build phases:
-* Copy Files Phase - will copy specified files to a specified destination
-* Run Script Phase - will run a script
-* Headers Phase - will specify list of header files (*.h) that will be copied to the destination's headers directory
+* *Copy Files Phase* - will copy specified files to a specified destination
+* *Run Script Phase* - will run a script
+* *Headers Phase* - will specify list of header files (*.h) that will be copied to the destination's headers directory
 
 # When to use implicit or explicit Xcode target dependencies
 
@@ -147,11 +152,11 @@ Use explicit dependencies for products in the same project or workspace that are
 
 To illustrate the use of implicit and explicit dependencies in a single Xcode project, let's take a look at an example.
 
-The example source code is on [GitHub][1].
+The example source code is on [GitHub][4].
 
 In the example project, we would like to build an iOS app that uses iOS dynamic framework and iOS static library. The framework includes all of its resources in the framework bundle itself. The library, however, is not a bundle - it just code. That is why, if library requires any resources, we have to ship and include them separately. In this example, the resources are groupped into a resource bundle.
 
-![Target Dependency Diagram](/assets/target_dependency_diagram.png)
+![Target Dependency Diagram][5]
 
 *Figure 3*. The application links and embeds the Framework (explicit dependency), links to the static library (implicit dependency), which explicitly depends on the resource bundle.
 
@@ -159,7 +164,7 @@ This configuration will allow the build system to recompile all of the app compo
 
 Creation of a library or a framework in the same project is trivial - just use the "Add a target" button in Xcode, as shown in the image below, and then follow the setup wizard.
 
-![Add Target Button](/assets/add_target_button.png)
+![Add Target Button][6]
 
 The tricky part is creating a resource bundle. On iOS, this bundle type is unsupported, but we can adjust macOS bundle for iOS platform.
 
@@ -206,13 +211,24 @@ public class MyLibrary {
 
 You can now import the library in the main app and use `MyLibrary.myLocalizedString()` to get that localized string.
 
+# Conclusion
 
+Xcode target dependencies are targets built before the selected target. There are implicit dependencies, discovered by Xcode automatically, and explicit dependencies, which you can add yourself in the target's Build Phases. Xcode can build various product types, among which are iOS apps, iOS dynamic frameworks, iOS static libraries, and bundles. 
 
-# Reference
+Normally, you use only implicit targets that Xcode discovers automatically. If you want to specify specific build order of targets in your project, then use target dependencies build phase. At last, we looked at the example of how to configure iOS app project to use both types of dependencies.
 
-* https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html - bundle types and their structure
-* https://developer.apple.com/library/archive/featuredarticles/XcodeConcepts/Concept-Targets.html - build targets definition
-* https://developer.apple.com/library/archive/featuredarticles/XcodeConcepts/Concept-Build_Settings.html#//apple_ref/doc/uid/TP40009328-CH6-SW1 - build settings definition
-* https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPRuntimeConfig/Articles/ConfigApplications.html - PkgInfo explanation
+# References
 
-[1]: https://github.com/DmitryBespalov/XcodeTargetDependenciesExample
+* The icons used in the article images (application icon, library icon, framework icon, bundle icon) are copyright of Apple.
+* Code examples are under MIT license.
+* <https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html> - bundle types and their structure
+* <https://developer.apple.com/library/archive/featuredarticles/XcodeConcepts/Concept-Targets.html> - build targets definition
+* <https://developer.apple.com/library/archive/featuredarticles/XcodeConcepts/Concept-Build_Settings.html#//apple_ref/doc/uid/TP40009328-CH6-SW1> - build settings definition
+* <https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPRuntimeConfig/Articles/ConfigApplications.html> - PkgInfo file explanation
+
+[1]: /assets/target_dependencies_focused.png
+[2]: /assets/link_with_libraries.png
+[3]: /assets/target_dependencies.png
+[4]: https://github.com/DmitryBespalov/XcodeTargetDependenciesExample
+[5]: /assets/target_dependency_diagram.png
+[6]: /assets/add_target_button.png
