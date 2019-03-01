@@ -2,6 +2,7 @@
 layout: post
 title:  "Xcode Target Dependencies"
 description: "Article describing what are Xcode target dependencies, targets, products, when and how to use them."
+redirect_from: /2018/05/17/xcode-dependencies.html
 ---
 
 # Definition
