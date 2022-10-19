@@ -29,5 +29,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # security updates
-gem "nokogiri", "~> 1.11.0"
+gem "nokogiri", "~> 1.13.9"
 gem "kramdown", "~> 2.3.0"
